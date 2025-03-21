@@ -18,7 +18,9 @@ type
     lbIPAddress: TLabel;
     eMemo: TMemo;
     btnExecute: TButton;
+    btnMyIP: TButton;
     procedure btnExecuteClick(Sender: TObject);
+    procedure btnMyIPClick(Sender: TObject);
   private
   public
   end;
@@ -31,6 +33,7 @@ implementation
 {$R *.dfm}
 
 uses
+  System.JSON,
   System.Net.HttpClient;
 
 function GetLocation(const AIP: string): string;
@@ -45,9 +48,34 @@ begin
   end;
 end;
 
+function GetMyIP(): string;
+begin
+  Result := '';
+  var LHttp := THttpClient.Create;
+  try
+    var LResponse := LHttp.Get('https://ipapi.co/json/');
+    if LResponse.StatusCode = 200 then
+    begin
+      var LJSON := TJSONObject.ParseJSONValue(LResponse.ContentAsString(TEncoding.UTF8)) as TJSONObject;
+      try
+        Result := LJSON.GetValue<string>('ip');
+      finally
+        LJSON.Free;
+      end;
+    end;
+  finally
+    LHttp.Free;
+  end;
+end;
+
 procedure TfrmMain.btnExecuteClick(Sender: TObject);
 begin
   eMemo.Text := GetLocation(eIPAddress.Text);
+end;
+
+procedure TfrmMain.btnMyIPClick(Sender: TObject);
+begin
+  eMemo.Text := GetMyIP();
 end;
 
 end.

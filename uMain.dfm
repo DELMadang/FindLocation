@@ -21,7 +21,7 @@ object frmMain: TfrmMain
   object eIPAddress: TEdit
     Left = 66
     Top = 16
-    Width = 558
+    Width = 463
     Height = 23
     TabOrder = 0
   end
@@ -34,12 +34,21 @@ object frmMain: TfrmMain
     TabOrder = 1
   end
   object btnExecute: TButton
-    Left = 630
+    Left = 535
     Top = 15
     Width = 75
     Height = 25
     Caption = #51312#54924
     TabOrder = 2
     OnClick = btnExecuteClick
+  end
+  object btnMyIP: TButton
+    Left = 618
+    Top = 16
+    Width = 75
+    Height = 25
+    Caption = #45236' '#50500#51060#54588
+    TabOrder = 3
+    OnClick = btnMyIPClick
   end
 end
